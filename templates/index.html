@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">Курсы валют :</div>
+        <div class="table-container">
+            {{ table | safe }}
+        </div>
+    </div>
+</div>
+<div class="films-container">
+    <ul class="films-list">
+      {% for film in films %}
+        <li class="film">
+            <a href="{{ film.url }}"><img src="{{ film.image }}"></a>
+            <a href="{{ film.url }}">{{ film.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

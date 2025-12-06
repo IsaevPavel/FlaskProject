@@ -1,0 +1,84 @@
+/*
+* {
+    outline: 1px solid grey;
+}
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 5px;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%; /* чтобы растянуть контейнер на всю ширину */
+}
+
+.table-wrapper {
+    display: flex;
+    flex-direction: column; /* текст над таблицей */
+}
+
+.table-title {
+    text-align: left; /* текст слева */
+    font-size: 24px;
+    color: #df8181;
+    margin-bottom: 10px;
+}
+
+.table-container {
+    display: flex;
+    justify-content: flex-end; /* таблица справа */
+}
+
+table {
+    border-collapse: collapse; /* объединяем границы */
+    width: 400px;
+}
+
+th, td {
+    border: 1px solid #000; /* контур всех ячеек */
+    padding: 8px 12px;
+    text-align: center;
+    color: #df8181;
+}
+
+th {
+    background-color: #f2f2f2; /* серый фон заголовка */
+    font-weight: bold;
+}
+
+th.future-date i {
+    font-style: normal; /* отменяет курсив */
+}
+
+.film {
+    flex: 1 1 176px;   /* растет и сжимается, но минимум 176px */
+    max-width: 200px;  /* ограничиваем слишком большой рост */
+    text-align: center;
+}
+
+.film img {
+    width: 100%;             /* чтобы картинка точно совпала с шириной блока */
+    display: block;          /* убирает отступы под img */
+}
+
+.film a {
+    display: block;          /* перенос строки под картинку */
+    text-decoration: none;   /* убрать подчёркивание, если нужно */
+    color: #df8181;             /* цвет текста */
+    max-width: 100%;         /* чтобы текст не выходил за картинку */
+    word-wrap: break-word;   /* перенос длинных слов */
+    margin-top: 10px;         /* небольшой отступ сверху */
+}
+
+.films-list {
+    display: flex;           /* включаем горизонтальный флекс */
+    flex-wrap: wrap;         /* перенос строк при нехватке места */
+    gap: 10px;               /* расстояние между фильмами */
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
