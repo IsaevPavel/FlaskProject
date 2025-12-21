@@ -1,6 +1,6 @@
-from class_parsing_currencies import ParsingCurrencies
-from class_parsing_films import ParsingPosterFilms
+from datetime import datetime
 
-obj = ParsingPosterFilms()
-print(obj.get_films())
+date = datetime(2018, 10, 10).strftime("%Y.%m.%d")
+
+print(date)
 

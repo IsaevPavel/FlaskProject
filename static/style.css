@@ -1,3 +1,4 @@
+
 /*
 * {
     outline: 1px solid grey;
@@ -7,41 +8,55 @@
 body {
     font-family: Arial, sans-serif;
     padding: 5px;
+    color: #607d8b;
 }
 
-.container {
+.my-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     width: 100%; /* чтобы растянуть контейнер на всю ширину */
 }
 
 .table-wrapper {
     display: flex;
     flex-direction: column; /* текст над таблицей */
+    width: 800px;
 }
 
 .table-title {
-    text-align: left; /* текст слева */
+    text-align: center; /* текст слева */
     font-size: 24px;
-    color: #df8181;
+    color: #607d8b;
     margin-bottom: 10px;
-}
-
-.table-container {
-    display: flex;
-    justify-content: flex-end; /* таблица справа */
 }
 
 table {
     border-collapse: collapse; /* объединяем границы */
-    width: 400px;
+    width: 100%;
+}
+
+.table-form form {
+    display: flex;         /* горизонтальное расположение полей */
+    flex-wrap: nowrap;     /* запрещаем перенос на новую строку */
+}
+
+.table-form form input {
+    width: 100%;           /* фиксированная ширина полей */
+    box-sizing: border-box;
+    border-radius: 0;           /* убираем скругление */
+    flex: 0 0 60px;             /* фиксированная ширина */
+    margin: 0;
+}
+
+.table-form input:focus {
+    box-shadow: none;       /* убирает тень Bootstrap */
 }
 
 th, td {
     border: 1px solid #000; /* контур всех ячеек */
     padding: 8px 12px;
     text-align: center;
-    color: #df8181;
+    color: #607d8b;
 }
 
 th {
@@ -49,8 +64,9 @@ th {
     font-weight: bold;
 }
 
-th.future-date i {
-    font-style: normal; /* отменяет курсив */
+.btn {
+    border: none;
+    border-radius: 0;
 }
 
 .film {
@@ -67,7 +83,7 @@ th.future-date i {
 .film a {
     display: block;          /* перенос строки под картинку */
     text-decoration: none;   /* убрать подчёркивание, если нужно */
-    color: #df8181;             /* цвет текста */
+    color: #607d8b;             /* цвет текста */
     max-width: 100%;         /* чтобы текст не выходил за картинку */
     word-wrap: break-word;   /* перенос длинных слов */
     margin-top: 10px;         /* небольшой отступ сверху */

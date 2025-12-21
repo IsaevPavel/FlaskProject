@@ -1,16 +1,24 @@
 import requests
-from bs4 import BeautifulSoup
+from datetime import datetime
 
 
-class ParsingCurrencies:
-    url_table = "https://www.nbrb.by/"
+class ParsingCurrency:
 
     def __init__(self):
-        self.table = None
-        self.get_table()
+        self.json = None
+        self.year = None
+        self.month = None
+        self.day = None
+        self.date = None
+        self.get_datetime()
 
-    def get_table(self):
-        response = requests.get(self.url_table)
-        soup = BeautifulSoup(response.text, "html.parser")
-        table_currency = soup.find(id="p4")
-        self.table = table_currency.find("table")
+    def get_datetime(self):
+        dt = datetime.now()
+        self.year, self.month, self.day = dt.year, dt.month, dt.day
+
+    def get_all_currency_json(self, y=None, m=None, d=None):
+        y, m, d = y or self.year, m or self.month, d or self.day
+        url = "https://api.nbrb.by/exrates/rates?ondate={}-{}-{}&periodicity=0".format(y, m, d)  # URL сайта (str)
+        self.json = requests.get(url=url).json()
+        self.date = datetime(int(y), int(m), int(d)).strftime("%d.%m.%Y")
+        return self.json
