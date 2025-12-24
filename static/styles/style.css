@@ -1,9 +1,7 @@
 
-/*
 * {
     outline: 1px solid grey;
 }
-*/
 
 body {
     font-family: Arial, sans-serif;
@@ -13,7 +11,7 @@ body {
 
 .my-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%; /* чтобы растянуть контейнер на всю ширину */
 }
 
@@ -52,6 +50,13 @@ table {
     box-shadow: none;       /* убирает тень Bootstrap */
 }
 
+.error {
+    min-height: 25px;
+    color: #bf0e0e;
+    font-size: 16px;
+    text-align: center;
+}
+
 th, td {
     border: 1px solid #000; /* контур всех ячеек */
     padding: 8px 12px;
@@ -62,6 +67,10 @@ th, td {
 th {
     background-color: #f2f2f2; /* серый фон заголовка */
     font-weight: bold;
+}
+
+.authorization {
+    text-align: left;
 }
 
 .btn {

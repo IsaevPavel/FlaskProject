@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, jsonify
 from datetime import datetime
 from class_parsing_currencies import ParsingCurrency
 from class_parsing_films import ParsingPosterFilms
@@ -21,7 +21,6 @@ def index():
     currency_data = session['currency_data']
     date = session['date']
 
-    # ===== POST =====
     if request.method == "POST":
         year = request.form.get("YEAR")
         month = request.form.get("MONTH")
@@ -47,7 +46,8 @@ def index():
                 date = session['date']
 
             except ValueError:
-                error_message = "Введите корректную дату в формате DD-MM-YYYY!"
+                error_message = "Введите корректную дату от 01.07.2016 до сегодня!"
+
     return render_template(
         'index.html',
         FILMS=films_row,
