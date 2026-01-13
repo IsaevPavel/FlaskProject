@@ -1,12 +1,17 @@
-
+/*
 * {
     outline: 1px solid grey;
 }
+*/
 
 body {
     font-family: Arial, sans-serif;
     padding: 5px;
     color: #607d8b;
+}
+
+a {
+    text-decoration: none;
 }
 
 .my-container {

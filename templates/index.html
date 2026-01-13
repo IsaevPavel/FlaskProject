@@ -10,60 +10,96 @@
 <div class="my-container">
     <div class="table-wrapper">
         <div class="table-title">Курсы валют на: {{ DATE }}</div>
-        <div class="table-container">
-            <table>
-                {% for cur in CURRENCY %}
-                <tr>
-                    {% if cur['Cur_Abbreviation'] in ['RUB', 'USD', 'EUR', 'CNY'] %}
-                    <td>{{ cur['Cur_Name'] }}</td>
-                    <td>{{ cur['Cur_OfficialRate'] }}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
+            <div class="table-container">
+                <table>
+                    {% for cur in CURRENCY %}
+                    <tr>
+                        {% if cur['Cur_Abbreviation'] in ['RUB', 'USD', 'EUR', 'CNY'] %}
+                        <td>{{ cur['Cur_Name'] }}</td>
+                        <td>{{ cur['Cur_OfficialRate'] }}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+         {% if USERNAME %}
+            <div>
+                <p></p>
+                <p style="text-align: center;">Введите дату от 01.07.2016 до сегодня</p>
+            </div>
+            <div class="table-form">
+                <form action="/" method="post" id="myForm">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="день" name="DAY">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="месяц" name="MONTH">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="год" name="YEAR">
+                    </div>
+                    <button type="submit" class="btn btn-dark" style="color: #607d8b">Отправить</button>
+                </form>
+                <p></p>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-dark" style="color: #607d8b" onclick="window.location.href='/reset'">
+                        Текущий курс валют
+                    </button>
+                </div>
+            </div>
+        {% else %}
+            <p></p>
+            <p style="text-align: center">Авторизуйтесь для работы с формой валюты!!!</p>
+        {% endif %}
         <div>
-            <p></p>
-            <p style="text-align: center;">Введите дату от 01.07.2016 до сегодня</p>
-        </div>
-        <div class="table-form">
-            <form action="/" method="post" id="myForm">
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="день" name="DAY">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="месяц" name="MONTH">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="год" name="YEAR">
-                </div>
-                <button type="submit" class="btn btn-dark" style="color: #607d8b">Отправить</button>
-            </form>
-            <p></p>
-        <div class="d-grid gap-2">
-            <button class="btn btn-dark" style="color: #607d8b" onclick="window.location.href='/reset'">
-                Текущий курс валют
-            </button>
-        </div>
-        </div>
-        <div>
-            <p></p>
-            <div id="error" class="error">
+            <div class="error">
                 {{ ERROR or "" }}
             </div>
         </div>
     </div>
-    <div class="authorization">
-        Второй контейнер
+    <div class="table-form">
+        <div class="error">
+            {% if USERNAME %}
+                {{ USERNAME }} <a href="/logout">Выйти</a>
+            {% endif %}
+        </div>
+        <form action="/register" method="post">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Логин" name="username">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Пароль" name="password">
+            </div>
+            <button type="submit" class="btn btn-dark" style="color: #607d8b; width: 140px;">Регистрация</button>
+        </form>
+        <div class="error">
+            {{ REGISTER_ERROR or "" }}
+        </div>
+        <form action="/login" method="post">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Логин" name="username">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Пароль" name="password">
+            </div>
+            <button type="submit" class="btn btn-dark" style="color: #607d8b; width: 140px;">Авторизация</button>
+        </form>
+        <div class="error">
+            {{ LOGIN_ERROR or "" }}
+        </div>
     </div>
 </div>
 <p></p>
 <div class="films-container">
     <ul class="films-list">
-      {% for film in FILMS %}
+      {% for film in FILMS[:9] %}
         <li class="film">
-            <a href="{{ film.url }}"><img src="{{ film.image }}"></a>
-            <a href="{{ film.url }}">{{ film.title }}</a>
+            <a href="{{ film.url }}" target="_blank" rel="noopener noreferrer">
+                <img src="{{ film.image }}" alt="{{ film.title }}">
+            </a>
+            <a href="{{ film.url }}" target="_blank" rel="noopener noreferrer">
+                {{ film.title }}
+            </a>
         </li>
       {% endfor %}
     </ul>
