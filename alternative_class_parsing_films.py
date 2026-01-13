@@ -31,8 +31,8 @@ class ParsingFilms:
     def get_films(self):
         result = []
         # for film in self.list_li:
-        #     print(film.prettify())
-        #     print('----------------')
+            # print(film.prettify())
+            # print('----------------')
         for li in self.list_li:
             result.append({"title": li.find("img").get("alt"),
                            "url": urljoin(BASE_URL, li.find("a").get("href")),

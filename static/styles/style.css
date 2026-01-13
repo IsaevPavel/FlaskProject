@@ -4,6 +4,12 @@
 }
 */
 
+/*
+* {
+  background-color: rgba(255, 0, 0, 0.05);
+}
+*/
+
 body {
     font-family: Arial, sans-serif;
     padding: 5px;
@@ -59,7 +65,14 @@ table {
     min-height: 25px;
     color: #bf0e0e;
     font-size: 16px;
-    text-align: center;
+    text-align: left;
+}
+
+.log_in {
+    min-height: 25px;
+    color: #bf0e0e;
+    font-size: 16px;
+    text-align: right;
 }
 
 th, td {

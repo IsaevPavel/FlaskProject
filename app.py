@@ -70,7 +70,7 @@ def login():
     password = request.form.get("password")
 
     if not username or not password:
-        login_error = "Заполните форму"
+        login_error = "Заполните форму!"
 
     elif username in users:
         input_hash = hashlib.sha256(password.encode()).hexdigest()
@@ -78,9 +78,9 @@ def login():
         if users[username] == input_hash:
             session["username"] = username
         else:
-            login_error = "Invalid password"
+            login_error = "Неверный пароль!"
     else:
-        login_error = "Invalid username or password"
+        login_error = "Такого логина не существует!"
 
     date = session.get('date')
     currency_data = session.get('currency_data')
@@ -108,6 +108,12 @@ def register():
     register_error = None
     username = request.form.get("username")
     password = request.form.get("password")
+
+    if "username" in session:
+        log_in = session["username"]
+    else:
+        log_in = None
+
     if not username or not password:
         register_error = "Заполните форму!"
     elif not username in users:
@@ -123,7 +129,8 @@ def register():
         REGISTER_ERROR=register_error,
         FILMS=films_row,
         DATE=date,
-        CURRENCY=currency_data
+        CURRENCY=currency_data,
+        USERNAME=log_in
     )
 
 
