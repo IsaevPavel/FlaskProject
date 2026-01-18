@@ -29,7 +29,7 @@ a {
 .table-wrapper {
     display: flex;
     flex-direction: column; /* текст над таблицей */
-    width: 800px;
+    width: 700px;
 }
 
 .table-title {
@@ -69,10 +69,13 @@ table {
 }
 
 .log_in {
-    min-height: 25px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    min-height: 36px;
     color: #bf0e0e;
     font-size: 16px;
-    text-align: right;
+    margin-bottom: 10px;
 }
 
 th, td {

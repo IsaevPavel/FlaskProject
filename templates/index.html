@@ -42,9 +42,9 @@
                 </form>
                 <p></p>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-dark" style="color: #607d8b" onclick="window.location.href='/reset'">
+                    <a class="btn btn-dark" style="color: #607d8b" href="{{ url_for('reset') }}">
                         Текущий курс валют
-                    </button>
+                    </a>
                 </div>
             </div>
         {% else %}
@@ -60,10 +60,10 @@
     <div class="table-form">
         <div class="log_in">
             {% if USERNAME %}
-                {{ USERNAME }} <a href="/logout">Выйти</a>
+                {{ USERNAME }} <a href="{{ url_for('logout') }}">Выйти</a>
             {% endif %}
         </div>
-        <form action="/register" method="post">
+        <form action="{{ url_for('register') }}" method="post">
             <div class="col">
                 <input type="text" class="form-control" placeholder="Логин" name="username">
             </div>
@@ -75,7 +75,7 @@
         <div class="error">
             {{ REGISTER_ERROR or "" }}
         </div>
-        <form action="/login" method="post">
+        <form action="{{ url_for('login') }}" method="post">
             <div class="col">
                 <input type="text" class="form-control" placeholder="Логин" name="username">
             </div>
