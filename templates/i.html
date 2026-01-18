@@ -1,0 +1,101 @@
+<!-- КОМЕНТАРИЙ -->
+<!-- Jinja2 - это ШАБЛОНИЗАТОР позволяющий разбавить HTML код вставками из Python кода -->
+
+<!-- НЕ BOOTSTRAP -->
+<!-- Bootstrap — это фреймворк (CSS + JS), который используется веб-разработчиками для быстрой вёрстки адаптивных дизайнов (чтобы сделать страницу шаблона красивой, гибкой и адаптивной) -->
+<!-- Конвертер цветов: https://colorscheme.ru/color-converter.html -->
+<!-- Создание таблицы, где <tr> - строки | <th> - столбики(заголовки) | <td> - столбики(обычные) -->
+<!-- Выравнивание: [css: ".center {text-align: center;}"] [bootstrap: class="text-center"] -->
+
+<!-- BOOTSTRAP -->
+<!-- ! Подключение через CDN: https://getbootstrap.com/ -->
+<!-- ! Создание сетки сайта: https://bootstrap-4.ru/docs/5.0/layout/grid/ -->
+<!-- Отступы: https://bootstrap-4.ru/docs/4.0/utilities/spacing/ -->
+<!-- Кнопки: https://bootstrap-4.ru/docs/5.0/components/buttons/ -->
+<!-- Текст Выравнивание: https://bootstrap-4.ru/docs/5.0/utilities/text/ -->
+<!-- Формы: https://bootstrap-4.ru/docs/5.0/forms/overview/ -->
+<!-- Таблицы: https://bootstrap-4.ru/docs/5.0/content/tables/ -->
+<!-- Цвет: https://bootstrap-4.ru/docs/4.0/utilities/colors/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+
+    <!-- Подключение Bootstrap (Чужой CSS и JS) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+
+    <!-- Подключение Google Шрифтов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+</head>
+<body style="background-image: url({{ url_for('static', filename='image/background.png') }});">
+
+<!-- БЛОК 1. ВСТАВКА КНОПОК МЕНЮ -->
+<div class="text-center pt-4">
+    <a class="btn btn-outline-dark" href="/about">О нас</a>
+    <a class="btn btn-outline-dark" href="/">Главная</a>
+    <a class="btn btn-outline-dark" href="/main">Основной материал</a>
+</div>
+
+<!-- БЛОК 2. ВСТАВКА ФОРМЫ ДЛЯ ПЕРЕДАЧИ ГОДА В ВАЛЮТЫ -->
+<!-- d-grid - Сетка, col-6 - Ширина, mx-auto - Равный отступ по X, gap-2 - Разрыв между элементами -->
+<h1 class="text-center pt-3">Форма отправки года</h1>
+<form class="d-grid col-6 mx-auto gap-2 text-center" action="{{ url_for('index') }}" method="POST">
+    <input class="form-control" type="text" name="YEAR">  <!-- Поле ввода (c именем "DATA" которое придумали сами) -->
+    <input class="btn btn-success" type="submit">  <!-- Кнопка (обязательно submit) -->
+</form>
+
+<!-- БЛОК 3. ВСТАВКА ТАБЛИЦЫ ВАЛЮТ (СЕТКА) -->
+<h1 class="text-center pt-5">Таблица Валют за {{ TABLE_NBRB[0]["Date"][:4] }}  год</h1>
+<div class="d-grid col-10 mx-auto">
+<table class="table table-dark table-striped">
+    <!-- Заголовок таблицы -->
+    <tr>
+        <th>№</th>
+        <th>ID</th>
+        <th>Аббревиатура</th>
+        <th>Валюта</th>
+        <th>За</th>
+        <th>Цена</th>
+    </tr>
+    <!-- Содержимое таблицы -->
+    {% for cur in TABLE_NBRB %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ cur['Cur_ID'] }}</td>
+        <td>{{ cur['Cur_Abbreviation'] }}</td>
+        <td>{{ cur['Cur_Name'] }}</td>
+        <td>{{ cur['Cur_Scale'] }}</td>
+        <td>{{ cur['Cur_OfficialRate'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<!-- БЛОК 4. ВСТАВКА ТАБЛИЦЫ ФИЛЬМОВ (ТАБЛИЦЫ) https://fonts.google.com/ -->
+<h1 class="text-center pt-3">Таблица Фильмов</h1>
+<div class="d-grid col-10 mx-auto text-center">
+    <table>
+        <tr class="row gx-5">
+            {% for i in range(0,5) %}
+                <td class="col"><a href="{{ TABLE_AFISHA[2][i] }}"><img src="{{ TABLE_AFISHA[1][i] }}"></a></td>
+            {% endfor %}
+        </tr>
+        <tr class="row gx-5">
+            {% for i in range(0,5) %}
+            <td class="col"><a class="link-dark text-decoration-none" href="{{ TABLE_AFISHA[2][i] }}"><b><span style="font-family: 'Caveat'; font-size: 30px;">{{ TABLE_AFISHA[0][i] }}</span></b></a></td>
+            {% endfor %}
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

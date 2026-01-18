@@ -78,16 +78,13 @@ table {
     margin-bottom: 10px;
 }
 
-th, td {
-    border: 1px solid #000; /* контур всех ячеек */
-    padding: 8px 12px;
-    text-align: center;
+.table-dark th {
+    font-weight: normal;
     color: #607d8b;
 }
 
-th {
-    background-color: #f2f2f2; /* серый фон заголовка */
-    font-weight: bold;
+.table-dark td {
+    color: #afb2b3;
 }
 
 .authorization {

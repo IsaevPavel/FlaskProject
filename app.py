@@ -3,8 +3,8 @@ from db.database import close_db
 from datetime import datetime
 from services.class_parsing_currencies import ParsingCurrency
 from services.specified_date_for_parsing_currencies import specified_date_for_parsing_currencies
-# from class_parsing_films import ParsingFilms
-from services.alternative_class_parsing_films import ParsingFilms
+from services.class_parsing_films import ParsingFilms
+# from services.alternative_class_parsing_films import ParsingFilms
 from errors.errors import UserError, EmptyFieldsError
 from services.user_manager import register_user, login_user
 from db.init_db import init_db

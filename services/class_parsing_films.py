@@ -2,17 +2,19 @@ import requests
 from bs4 import BeautifulSoup
 import textwrap
 
-class ParsingPosterFilms:
+class ParsingFilms:
     def __init__(self):
         self.url = "https://afisha.me/"
         self.response = requests.get(self.url)
         self.soup = BeautifulSoup(self.response.text, "html.parser")
-        self.list_li = None
+        self.list_li = []
         self.get_li()
 
     def get_li(self):
-        eml_ul = self.soup.find("ul", class_="b-lists list_afisha col-5")
-        self.list_li = eml_ul.find_all("li")
+        elm_ul = self.soup.find_all("ul", class_="b-lists list_afisha col-5")
+        for ul in elm_ul:
+            for li in ul.find_all("li"):
+                self.list_li.append(li)
         # for ul in uls:
         #     parent = ul.parent
         #     if parent and parent.get("id") == "events-block":

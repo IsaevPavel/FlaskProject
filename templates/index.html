@@ -11,16 +11,25 @@
     <div class="table-wrapper">
         <div class="table-title">Курсы валют на: {{ DATE }}</div>
             <div class="table-container">
-                <table>
-                    {% for cur in CURRENCY %}
-                    <tr>
-                        {% if cur['Cur_Abbreviation'] in ['RUB', 'USD', 'EUR', 'CNY'] %}
-                        <td>{{ cur['Cur_Name'] }}</td>
-                        <td>{{ cur['Cur_OfficialRate'] }}</td>
-                        {% endif %}
+                <table class="table table-dark table-striped">
+                    <tr class="table-head">
+                      <th>Абревиатура</th>
+                      <th>Название</th>
+                      <th>Количество</th>
+                      <th>Цена</th>
                     </tr>
-                    {% endfor %}
+                  {% for cur in CURRENCY %}
+                    {% if cur['Cur_Abbreviation'] in ['RUB', 'USD', 'EUR', 'CNY'] %}
+                        <tr>
+                          <th class="table-head">{{ cur['Cur_Abbreviation'] }}</th>
+                          <td>{{ cur['Cur_Name'] }}</td>
+                          <td>{{ cur['Cur_Scale'] }}</td>
+                          <td>{{ cur['Cur_OfficialRate'] }}</td>
+                        </tr>
+                    {% endif %}
+                  {% endfor %}
                 </table>
+
             </div>
          {% if USERNAME %}
             <div>
