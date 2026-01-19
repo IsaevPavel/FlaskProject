@@ -26,10 +26,22 @@ a {
     width: 100%; /* чтобы растянуть контейнер на всю ширину */
 }
 
+.table-container {
+    margin-bottom: 35px;
+}
+
+#myForm {
+    margin-bottom: 10px;
+}
+
 .table-wrapper {
     display: flex;
     flex-direction: column; /* текст над таблицей */
     width: 700px;
+}
+
+.table {
+    margin: 0; /* убирает внешний отступ */
 }
 
 .table-title {
@@ -66,6 +78,25 @@ table {
     color: #bf0e0e;
     font-size: 16px;
     text-align: left;
+}
+
+.registration_error {
+    background-color: #272727;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bf0e0e;
+    margin-bottom: 25px;
+}
+
+.form_data {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #607d8b;
+    margin: 0;
 }
 
 .log_in {

@@ -32,39 +32,31 @@
 
             </div>
          {% if USERNAME %}
-            <div>
-                <p></p>
-                <p style="text-align: center;">Введите дату от 01.07.2016 до сегодня</p>
-            </div>
             <div class="table-form">
                 <form action="/" method="post" id="myForm">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="день" name="DAY">
+                        <input type="text" class="form-control" placeholder="01" name="DAY">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="месяц" name="MONTH">
+                        <input type="text" class="form-control" placeholder="07" name="MONTH">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="год" name="YEAR">
+                        <input type="text" class="form-control" placeholder="2016" name="YEAR">
                     </div>
                     <button type="submit" class="btn btn-dark" style="color: #607d8b">Отправить</button>
                 </form>
-                <p></p>
                 <div class="d-grid gap-2">
                     <a class="btn btn-dark" style="color: #607d8b" href="{{ url_for('reset') }}">
                         Текущий курс валют
                     </a>
                 </div>
             </div>
-        {% else %}
-            <p></p>
-            <p style="text-align: center; color: #bf0e0e; height: 114px;">Авторизуйтесь для работы с формой валюты!!!</p>
-        {% endif %}
-        <div>
-            <div class="error">
-                {{ ERROR or "" }}
-            </div>
+        <div class="error">
+            {{ ERROR or "" }}
         </div>
+        {% else %}
+            <div class="registration_error">Авторизуйтесь для работы с формой валюты!</div>
+        {% endif %}
     </div>
     <div class="table-form">
         <div class="log_in">
@@ -100,7 +92,7 @@
 </div>
 <div class="films-container">
     <ul class="films-list">
-      {% for film in FILMS[:9] %}
+      {% for film in FILMS %}
         <li class="film">
             <a href="{{ film.url }}" target="_blank" rel="noopener noreferrer">
                 <img src="{{ film.image }}" alt="{{ film.title }}">
