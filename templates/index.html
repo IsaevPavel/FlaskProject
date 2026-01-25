@@ -8,6 +8,44 @@
 </head>
 <body>
 <div class="my-container">
+    <div class="table-form" style="background-image: url('{{ BACKGROUND_IMAGE }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 370px;
+            color: #07d79f;">
+        <div class="table-title">
+            <span style="color: #07d79f;">Погода: {{ CITY }}</span>
+            <img src="{{ url_for('static', filename=ICON) }}" alt="weather icon" style="width: 60px;">
+            <b>
+                {{ TEMPERATURE }}
+            </b>
+        </div>
+        {% if WEATHER is mapping and WEATHER %}
+        <ul style="font-size: 16px;">
+            {% for key, value in WEATHER.items() %}
+                <li>{{ value.description }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            {{ CITY or "" }}
+        {% endif %}
+        {% if USERNAME %}
+        <div class="weather_button">
+            <form action="{{ url_for('index') }}" method="post">
+                <div class="col">
+                    <input type="text" class="form-control width=200px" style="width: 300px;" placeholder="Город" name="city">
+                </div>
+                <button type="submit" class="btn btn-dark" name="form_type" value="weather">Отправить</button>
+            </form>
+        </div>
+        {% else %}
+            <div class="registration_error">Войдите для выбора города!</div>
+        {% endif %}
+    </div>
+    <div class="error">
+<!--            {{ ERROR or "" }}-->
+    </div>
     <div class="table-wrapper">
         <div class="table-title">Курсы валют на: {{ DATE }}</div>
             <div class="table-container">
@@ -29,8 +67,7 @@
                     {% endif %}
                   {% endfor %}
                 </table>
-
-            </div>
+            </div >
          {% if USERNAME %}
             <div class="table-form">
                 <form action="/" method="post" id="myForm">
@@ -43,7 +80,7 @@
                     <div class="col">
                         <input type="text" class="form-control" placeholder="2016" name="YEAR">
                     </div>
-                    <button type="submit" class="btn btn-dark" style="color: #607d8b">Отправить</button>
+                    <button type="submit" class="btn btn-dark" name="form_type" value="currency">Отправить</button>
                 </form>
                 <div class="d-grid gap-2">
                     <a class="btn btn-dark" style="color: #607d8b" href="{{ url_for('reset') }}">
@@ -71,7 +108,7 @@
             <div class="col">
                 <input type="text" class="form-control" placeholder="Пароль" name="password">
             </div>
-            <button type="submit" class="btn btn-dark" style="color: #607d8b; width: 140px;">Регистрация</button>
+            <button type="submit" class="btn btn-dark" style="width: 140px;">Регистрация</button>
         </form>
         <div class="error">
             {{ REGISTER_ERROR or "" }}

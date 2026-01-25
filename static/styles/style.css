@@ -61,6 +61,15 @@ table {
     flex-wrap: nowrap;     /* запрещаем перенос на новую строку */
 }
 
+.table-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather_button {
+    margin-top: auto;
+}
+
 .table-form form input {
     width: 100%;           /* фиксированная ширина полей */
     box-sizing: border-box;
@@ -125,6 +134,7 @@ table {
 .btn {
     border: none;
     border-radius: 0;
+    color: #607d8b;
 }
 
 .film {

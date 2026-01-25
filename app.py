@@ -4,6 +4,7 @@ from datetime import datetime
 from services.class_parsing_currencies import ParsingCurrency
 from services.specified_date_for_parsing_currencies import specified_date_for_parsing_currencies
 from services.class_parsing_films import ParsingFilms
+from services.parsing_weather_selenium import parsing_weather
 # from services.alternative_class_parsing_films import ParsingFilms
 from errors.errors import UserError, EmptyFieldsError
 from services.user_manager import register_user, login_user
@@ -15,7 +16,6 @@ app.config["DATABASE"] = os.path.join(os.path.dirname(__file__), "db", "database
 app.teardown_appcontext(close_db)
 
 app.secret_key = 'secret_key_for_session'  # обязательно для session
-users = {}
 films = ParsingFilms()
 films_row = films.get_films()
 
@@ -23,6 +23,8 @@ films_row = films.get_films()
 @app.route('/', methods=['GET', 'POST'])
 def index():
     error_message = None
+    weather, city, icon, background_image, temp = parsing_weather()
+    print(icon)
     session_user = session.get("username")
 
     if 'currency_data' not in session:
@@ -33,24 +35,31 @@ def index():
     currency_data = session['currency_data']
     date = session['date']
 
+
+
     if request.method == "POST":
-        year = request.form.get("YEAR")
-        month = request.form.get("MONTH")
-        day = request.form.get("DAY")
-        error_message = None
+        form_type = request.form.get("form_type")
+        if form_type == "weather":
+            city = request.form.get("city")
+            weather, city, icon, background_image, temp = parsing_weather(city)
+        elif form_type == "currency":
+            error_message = None
+            year = request.form.get("YEAR")
+            month = request.form.get("MONTH")
+            day = request.form.get("DAY")
 
-        try:
-            specified_date_for_parsing_currencies(year, month, day)
-        except UserError as error:
-            error_message = error.message
+            try:
+                specified_date_for_parsing_currencies(year, month, day)
+            except UserError as error:
+                error_message = error.message
 
-        if error_message is None:
-            currency = ParsingCurrency()
-            session['currency_data'] = currency.get_all_currency_json(y=year, m=month, d=day)
-            session['date'] = datetime(int(year), int(month), int(day)).strftime('%d.%m.%Y')
+            if error_message is None:
+                currency = ParsingCurrency()
+                session['currency_data'] = currency.get_all_currency_json(y=year, m=month, d=day)
+                session['date'] = datetime(int(year), int(month), int(day)).strftime('%d.%m.%Y')
 
-            currency_data = session['currency_data']
-            date = session['date']
+                currency_data = session['currency_data']
+                date = session['date']
 
     return render_template(
         'index.html',
@@ -58,6 +67,11 @@ def index():
         FILMS=films_row,
         DATE=date,
         CURRENCY=currency_data,
+        WEATHER=weather,
+        CITY=city,
+        ICON=icon,
+        BACKGROUND_IMAGE=background_image,
+        TEMPERATURE=temp,
         ERROR=error_message
     )
 
@@ -120,6 +134,16 @@ def register():
 @app.route('/main', methods=['GET', 'POST'])
 def main():
     return render_template("main.html")
+
+
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    weather = None
+    if request.method == "POST":
+        city = request.form.get("city")
+        weather = parsing_weather(city)
+    return render_template('test.html', CITY=weather)
+
 
 
 @app.route('/logout')
