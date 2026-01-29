@@ -1,3 +1,4 @@
+
 /*
 * {
     outline: 1px solid grey;
@@ -38,6 +39,7 @@ a {
     display: flex;
     flex-direction: column; /* текст над таблицей */
     width: 700px;
+    margin: 0px 5px 0px 5px;
 }
 
 .table {
@@ -48,7 +50,16 @@ a {
     text-align: center; /* текст слева */
     font-size: 24px;
     color: #607d8b;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
+}
+
+.weather-title {
+    color: green;
+    font-size: 24px;
+}
+
+.weather-table {
+    width: 403.34px;
 }
 
 table {
@@ -66,9 +77,48 @@ table {
     flex-direction: column;
 }
 
+.icons-column {
+    display: flex;           /* включаем флекс-контейнер */
+    flex-direction: column;  /* ставим элементы вертикально */
+    align-items: center; /* выравниваем по центру */
+}
+
+.icons-column svg {
+    display: block;
+}
+
+.weather-row {
+    display: flex;           /* всё в одной строке */
+    justify-content: center;
+}
+
 .weather_button {
     margin-top: auto;
 }
+
+.weather-table {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent !important;
+}
+
+.weather-table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.weather-table td,
+.weather-table th {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0px 0px 8px 10px !important;
+}
+
+/*.temp {
+    font-size: 20px;
+    padding-bottom: 10px;
+    margin-left: 5px;
+}*/
 
 .table-form form input {
     width: 100%;           /* фиксированная ширина полей */

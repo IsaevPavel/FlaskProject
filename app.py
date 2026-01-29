@@ -23,25 +23,41 @@ films_row = films.get_films()
 @app.route('/', methods=['GET', 'POST'])
 def index():
     error_message = None
-    weather, city, icon, background_image, temp = parsing_weather()
-    print(icon)
     session_user = session.get("username")
 
     if 'currency_data' not in session:
         currency = ParsingCurrency()
         session['currency_data'] = currency.get_all_currency_json()
         session['date'] = currency.date
+        weather, city, icon, icon2, background_image, temp = parsing_weather()
+        weather_data = {
+            "weather": weather,
+            "city": city,
+            "icon": icon,
+            "icon2": icon2,
+            "background_image": background_image,
+            "temp": temp
+        }
+
+        session.update(weather_data)
 
     currency_data = session['currency_data']
     date = session['date']
-
+    weather, city, icon, icon2, background_image, temp = (
+        session.get("weather"),
+        session.get("city"),
+        session.get("icon"),
+        session.get("icon2"),
+        session.get("background_image"),
+        session.get("temp")
+    )
 
 
     if request.method == "POST":
         form_type = request.form.get("form_type")
         if form_type == "weather":
             city = request.form.get("city")
-            weather, city, icon, background_image, temp = parsing_weather(city)
+            weather, city, icon, icon2, background_image, temp = parsing_weather(city)
         elif form_type == "currency":
             error_message = None
             year = request.form.get("YEAR")
@@ -69,7 +85,8 @@ def index():
         CURRENCY=currency_data,
         WEATHER=weather,
         CITY=city,
-        ICON=icon,
+        FIRST_ICON=icon,
+        LAST_ICON=icon2,
         BACKGROUND_IMAGE=background_image,
         TEMPERATURE=temp,
         ERROR=error_message
@@ -83,6 +100,15 @@ def login():
 
     username = request.form.get("username")
     password = request.form.get("password")
+
+    weather, city, icon, icon2, background_image, temp = (
+        session.get("weather"),
+        session.get("city"),
+        session.get("icon"),
+        session.get("icon2"),
+        session.get("background_image"),
+        session.get("temp")
+    )
 
     try:
         if not username or not password:
@@ -101,8 +127,14 @@ def login():
         USERNAME=session_user,
         FILMS=films_row,
         DATE=date,
+        WEATHER=weather,
+        CITY=city,
         CURRENCY=currency_data,
-        LOGIN_ERROR=login_error
+        LOGIN_ERROR=login_error,
+        FIRST_ICON=icon,
+        LAST_ICON=icon2,
+        BACKGROUND_IMAGE=background_image,
+        TEMPERATURE=temp
     )
 
 
@@ -110,6 +142,15 @@ def login():
 def register():
     username = request.form.get("username")
     password = request.form.get("password")
+
+    weather, city, icon, icon2, background_image, temp = (
+        session.get("weather"),
+        session.get("city"),
+        session.get("icon"),
+        session.get("icon2"),
+        session.get("background_image"),
+        session.get("temp")
+    )
 
     try:
         if not username or not password:
@@ -127,6 +168,12 @@ def register():
         FILMS=films_row,
         DATE=date,
         CURRENCY=currency_data,
+        WEATHER=weather,
+        CITY=city,
+        FIRST_ICON=icon,
+        LAST_ICON=icon2,
+        BACKGROUND_IMAGE=background_image,
+        TEMPERATURE=temp,
         REGISTER_ERROR=register_error
     )
 
