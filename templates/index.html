@@ -163,27 +163,23 @@
   </defs>
 </svg>
 <div class="my-container">
-    <div class="table-form weather-table" style="background-image: url('{{ BACKGROUND_IMAGE }}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 370px;
-            color: #07d79f;">
-        <div class="weather-row">
-            <div class="weather-title">
-                <span >{{ CITY }}:<b style="margin-left: 5px;">{{ TEMPERATURE }}</b></span>
+    <div class="table-form weather-table">
+        <div class="weather-background-image" style="background-image: url('{{ BACKGROUND_IMAGE }}');">
+            <div class="weather-row">
+                <div class="weather-title">
+                    <span >{{ CITY }}:<b style="margin-left: 5px;">{{ TEMPERATURE }}</b></span>
+                </div>
+                <div class="icons-column">
+                    <svg width="50" height="38" >
+                        <use href="#{{ FIRST_ICON }}"></use>
+                    </svg>
+                    {% if LAST_ICON %}
+                    <svg width="50" height="18" >
+                        <use href="#{{ LAST_ICON }}"></use>
+                    </svg>
+                    {% endif %}
+                </div>
             </div>
-            <div class="icons-column">
-                <svg width="50" height="38" >
-                    <use href="#{{ FIRST_ICON }}"></use>
-                </svg>
-                {% if LAST_ICON %}
-                <svg width="50" height="18" >
-                    <use href="#{{ LAST_ICON }}"></use>
-                </svg>
-                {% endif %}
-            </div>
-        </div>
             <table class="table table-dark weather-table">
                 {% if WEATHER is mapping and WEATHER %}
                     {% for key, value in WEATHER.items() %}
@@ -196,6 +192,7 @@
                     {% endfor %}
                 {% endif %}
             </table>
+        </div>
         {% if USERNAME %}
         <div class="weather_button">
             <form action="{{ url_for('index') }}" method="post">
