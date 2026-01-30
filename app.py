@@ -29,35 +29,72 @@ def index():
         currency = ParsingCurrency()
         session['currency_data'] = currency.get_all_currency_json()
         session['date'] = currency.date
-        weather, city, icon, icon2, background_image, temp = parsing_weather()
+        weather, city, icon, icon2, background_image, temp, error_city = parsing_weather()
         weather_data = {
             "weather": weather,
             "city": city,
             "icon": icon,
             "icon2": icon2,
             "background_image": background_image,
-            "temp": temp
+            "temp": temp,
+            "error_city": error_city
         }
 
         session.update(weather_data)
 
     currency_data = session['currency_data']
     date = session['date']
-    weather, city, icon, icon2, background_image, temp = (
+
+    error_city = None
+    weather_data = {
+        "error_city": error_city
+
+    }
+    session.update(weather_data)
+
+    weather, city, icon, icon2, background_image, temp, error_city = (
         session.get("weather"),
         session.get("city"),
         session.get("icon"),
         session.get("icon2"),
         session.get("background_image"),
-        session.get("temp")
+        session.get("temp"),
+        session.get("error_city")
     )
 
 
     if request.method == "POST":
         form_type = request.form.get("form_type")
         if form_type == "weather":
-            city = request.form.get("city")
-            weather, city, icon, icon2, background_image, temp = parsing_weather(city)
+            city_from_form = request.form.get("city")
+            weather, city, icon, icon2, background_image, temp, error_city = parsing_weather(city_from_form)
+            if error_city is None:
+                weather_data = {
+                    "weather": weather,
+                    "city": city,
+                    "icon": icon,
+                    "icon2": icon2,
+                    "background_image": background_image,
+                    "temp": temp
+
+                }
+                session.update(weather_data)
+            else:
+                weather_data = {
+                    "error_city": error_city
+
+                }
+                session.update(weather_data)
+
+            weather, city, icon, icon2, background_image, temp, error_city = (
+                session.get("weather"),
+                session.get("city"),
+                session.get("icon"),
+                session.get("icon2"),
+                session.get("background_image"),
+                session.get("temp"),
+                session.get("error_city")
+            )
         elif form_type == "currency":
             error_message = None
             year = request.form.get("YEAR")
@@ -89,7 +126,8 @@ def index():
         LAST_ICON=icon2,
         BACKGROUND_IMAGE=background_image,
         TEMPERATURE=temp,
-        ERROR=error_message
+        ERROR=error_message,
+        ERROR_CITY=error_city
     )
 
 
@@ -101,13 +139,21 @@ def login():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    weather, city, icon, icon2, background_image, temp = (
+    error_city = None
+    weather_data = {
+        "error_city": error_city
+
+    }
+    session.update(weather_data)
+
+    weather, city, icon, icon2, background_image, temp, error_city = (
         session.get("weather"),
         session.get("city"),
         session.get("icon"),
         session.get("icon2"),
         session.get("background_image"),
-        session.get("temp")
+        session.get("temp"),
+        session.get("error_city")
     )
 
     try:
@@ -134,7 +180,8 @@ def login():
         FIRST_ICON=icon,
         LAST_ICON=icon2,
         BACKGROUND_IMAGE=background_image,
-        TEMPERATURE=temp
+        TEMPERATURE=temp,
+        ERROR_CITY=error_city
     )
 
 
@@ -143,13 +190,21 @@ def register():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    weather, city, icon, icon2, background_image, temp = (
+    error_city = None
+    weather_data = {
+        "error_city": error_city
+
+    }
+    session.update(weather_data)
+
+    weather, city, icon, icon2, background_image, temp, error_city = (
         session.get("weather"),
         session.get("city"),
         session.get("icon"),
         session.get("icon2"),
         session.get("background_image"),
-        session.get("temp")
+        session.get("temp"),
+        session.get("error_city")
     )
 
     try:
@@ -174,7 +229,8 @@ def register():
         LAST_ICON=icon2,
         BACKGROUND_IMAGE=background_image,
         TEMPERATURE=temp,
-        REGISTER_ERROR=register_error
+        REGISTER_ERROR=register_error,
+        ERROR_CITY=error_city
     )
 
 

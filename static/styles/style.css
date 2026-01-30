@@ -39,7 +39,7 @@ a {
     display: flex;
     flex-direction: column; /* текст над таблицей */
     width: 700px;
-    margin: 0px 5px 0px 5px;
+    margin: 0 auto;
 }
 
 .table {
@@ -60,6 +60,11 @@ a {
 
 .weather-table {
     width: 403.34px;
+/*    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 370px;
+    color: #07d79f;*/
 }
 
 table {
@@ -67,20 +72,55 @@ table {
     width: 100%;
 }
 
-.table-form form {
-    display: flex;         /* горизонтальное расположение полей */
-    flex-wrap: nowrap;     /* запрещаем перенос на новую строку */
-}
-
 .table-form {
     display: flex;
     flex-direction: column;
 }
 
+.table-form form {
+    display: flex;         /* горизонтальное расположение полей */
+    flex-wrap: nowrap;     /* запрещаем перенос на новую строку */
+}
+
+.table-form form input {
+    width: 100%;           /* фиксированная ширина полей */
+    box-sizing: border-box;
+    border-radius: 0;           /* убираем скругление */
+    flex: 0 0 60px;             /* фиксированная ширина */
+    margin: 0;
+}
+
+.table-form input:focus {
+    box-shadow: none;       /* убирает тень Bootstrap */
+}
+
+.table-log_in {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-log_in form {
+    display: flex;         /* горизонтальное расположение полей */
+    flex-wrap: nowrap;     /* запрещаем перенос на новую строку */
+    width: 403.34px;
+}
+
+.table-log_in input {
+    width: 100%;           /* фиксированная ширина полей */
+    box-sizing: border-box;
+    border-radius: 0;           /* убираем скругление */
+    flex: 0 0 60px;             /* фиксированная ширина */
+    margin: 0;
+}
+
+.table-log_in input:focus {
+    box-shadow: none;       /* убирает тень Bootstrap */
+}
+
 .icons-column {
     display: flex;           /* включаем флекс-контейнер */
     flex-direction: column;  /* ставим элементы вертикально */
-    align-items: center; /* выравниваем по центру */
+    align-items: center;     /* выравниваем по центру */
 }
 
 .icons-column svg {
@@ -92,7 +132,7 @@ table {
     justify-content: center;
 }
 
-.weather_button {
+.weather_button input {
     margin-top: auto;
 }
 
@@ -120,17 +160,7 @@ table {
     margin-left: 5px;
 }*/
 
-.table-form form input {
-    width: 100%;           /* фиксированная ширина полей */
-    box-sizing: border-box;
-    border-radius: 0;           /* убираем скругление */
-    flex: 0 0 60px;             /* фиксированная ширина */
-    margin: 0;
-}
 
-.table-form input:focus {
-    box-shadow: none;       /* убирает тень Bootstrap */
-}
 
 .error {
     min-height: 25px;
@@ -171,6 +201,7 @@ table {
 .table-dark th {
     font-weight: normal;
     color: #607d8b;
+    padding: 0px 0px 18.5px 15px !important;
 }
 
 .table-dark td {

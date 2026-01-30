@@ -3,36 +3,38 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from time import sleep
-
-
-
-
+from selenium.common.exceptions import TimeoutException
 
 def parsing_weather(city_name=None):
+    error_city = None
     options = Options()
     options.add_argument("--headless")
     driver = webdriver.Chrome(options=options)
     driver.get("https://www.gismeteo.by/weather-minsk-4248/")
 
     if city_name:
-        search_input = WebDriverWait(driver, 5).until(
+        search_input = WebDriverWait(driver, 3).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, ".js-input"))
         )
         search_input.send_keys(city_name)
 
-        dropdown_items = WebDriverWait(driver, 5).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.group.found"))
-        )
+        try:
+            dropdown_items = WebDriverWait(driver, 3).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.group.found"))
+            )
+
+            for item in dropdown_items:
+                name_span = item.find_element(By.CSS_SELECTOR, "span.name")
+
+                if city_name.lower() in name_span.text.lower():
+                    driver.execute_script("arguments[0].click();", name_span)
+                    break
+
+        except TimeoutException:
+            error_city = "Такого города нет!"
+            # return None, None, None, None, None, None, error_city
         # находим нужный город и кликаем
-        for item in dropdown_items:
-            name_span = item.find_element(By.CSS_SELECTOR, "span.name")
-            if city_name.lower() in name_span.text.lower():
-                driver.execute_script("arguments[0].click();", name_span)
-                break
-        else:
-            error = "Такого города нет!"
-            return error
+
 
         # выполнить JS и получить объект
     data = driver.execute_script("""
@@ -83,7 +85,6 @@ def parsing_weather(city_name=None):
         }
     city = f"{data['city']['translations']['ru']['city']['name']}"
     icon_code = data['weather']['cw']['iconWeather'][0]
-    print(icon_code)
     icon = icon_code
     icon2 = None
     if icon_code.count("_") >= 2:
@@ -93,8 +94,7 @@ def parsing_weather(city_name=None):
     b_n = data['weather']['cw']['colorBackground'][0].replace('-', '_')
     background_image = f"https://st.gismeteo.st/assets/bg-desktop-now/{b_n}.webp"
     temp = f"{data['weather']['cw']['temperatureAir'][0]}°C"
-    print(icon, icon2)
-    return weather_info, city, icon, icon2, background_image, temp
+    return weather_info, city, icon, icon2, background_image, temp, error_city
 
-# print(parsing_weather("Несвиж"))
+# print(parsing_weather())
 

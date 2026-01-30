@@ -208,9 +208,9 @@
         {% else %}
             <div class="registration_error">Войдите для выбора города!</div>
         {% endif %}
-    </div>
-    <div class="error">
-<!--            {{ ERROR or "" }}-->
+        <div class="error">
+            {{ ERROR_CITY or "" }}
+        </div>
     </div>
     <div class="table-wrapper">
         <div class="table-title">Курсы валют на: {{ DATE }}</div>
@@ -261,7 +261,7 @@
             <div class="registration_error">Авторизуйтесь для работы с формой валюты!</div>
         {% endif %}
     </div>
-    <div class="table-form">
+    <div class="table-log_in">
         <div class="log_in">
             {% if USERNAME %}
                 {{ USERNAME }} <a href="{{ url_for('logout') }}">Выйти</a>
