@@ -181,16 +181,60 @@
                 </div>
             </div>
             <table class="table table-dark weather-table">
-                {% if WEATHER is mapping and WEATHER %}
-                    {% for key, value in WEATHER.items() %}
-                        <tr>
-                          <td>{{ value.description }}</td>
-                          <td style="width: 70px; padding: 0;">
-                                  {{ value.value }}
-                          </td>
-                        </tr>
-                    {% endfor %}
-                {% endif %}
+                <tr>
+                  <td>{{ WEATHER['temperature']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['temperature']['value'] }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{ WEATHER['feels_like']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['feels_like']['value'] }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{ WEATHER['description']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['description']['value'] }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{ WEATHER['humidity']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['humidity']['value'] }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{ WEATHER['wind_speed']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['wind_speed']['value'] }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{ WEATHER['wind_gust']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['wind_gust']['value'] }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{ WEATHER['wind_direction']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['wind_direction']['value'] }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{ WEATHER['pressure']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['pressure']['value'] }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{ WEATHER['precipitation']['description'] }}</td>
+                  <td style="width: 70px; padding: 0;">
+                      {{ WEATHER['precipitation']['value'] }}
+                  </td>
+                </tr>
             </table>
         </div>
         {% if USERNAME %}

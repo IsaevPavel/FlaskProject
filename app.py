@@ -62,7 +62,6 @@ def index():
         session.get("error_city")
     )
 
-
     if request.method == "POST":
         form_type = request.form.get("form_type")
         if form_type == "weather":
@@ -75,16 +74,18 @@ def index():
                     "icon": icon,
                     "icon2": icon2,
                     "background_image": background_image,
-                    "temp": temp
+                    "temp": temp,
+                    "error_city": error_city
 
                 }
-                session.update(weather_data)
+
             else:
                 weather_data = {
                     "error_city": error_city
 
                 }
-                session.update(weather_data)
+
+            session.update(weather_data)
 
             weather, city, icon, icon2, background_image, temp, error_city = (
                 session.get("weather"),
@@ -113,7 +114,7 @@ def index():
 
                 currency_data = session['currency_data']
                 date = session['date']
-
+    # print(weather)
     return render_template(
         'index.html',
         USERNAME=session_user,

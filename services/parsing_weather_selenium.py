@@ -32,7 +32,7 @@ def parsing_weather(city_name=None):
 
         except TimeoutException:
             error_city = "Такого города нет!"
-            # return None, None, None, None, None, None, error_city
+            return None, None, None, None, None, None, error_city
         # находим нужный город и кликаем
 
 
