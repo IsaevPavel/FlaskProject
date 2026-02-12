@@ -17,13 +17,13 @@ def parsing_weather(city_name=None):
     driver.get("https://www.gismeteo.by/weather-minsk-4248/")
 
     if city_name:
-        search_input = WebDriverWait(driver, 3).until(
+        search_input = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, ".js-input"))
         )
         search_input.send_keys(city_name)
 
         try:
-            dropdown_items = WebDriverWait(driver, 3).until(
+            dropdown_items = WebDriverWait(driver, 5).until(
                 EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.group.found"))
             )
 
