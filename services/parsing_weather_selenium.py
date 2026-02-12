@@ -9,6 +9,10 @@ def parsing_weather(city_name=None):
     error_city = None
     options = Options()
     options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")  # иногда нужно
+    options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=options)
     driver.get("https://www.gismeteo.by/weather-minsk-4248/")
 
