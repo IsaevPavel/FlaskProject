@@ -170,7 +170,11 @@
         <div class="weather-background-image" style="background-image: url('{{ BACKGROUND_IMAGE }}');">
             <div class="weather-row">
                 <div class="weather-title">
+                    {% if CITY and TEMPERATURE %}
                     <span >{{ CITY }}:<b style="margin-left: 5px;">{{ TEMPERATURE }}</b></span>
+                    {% else %}
+                    <span >нет данных<b style="margin-left: 5px;">нет данных</b></span>
+                    {% endif %}
                 </div>
                 <div class="icons-column">
                     <svg width="50" height="38" >
