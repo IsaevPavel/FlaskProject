@@ -56,6 +56,7 @@ a {
 .weather-title {
     color: green;
     font-size: 24px;
+
 }
 
 .weather-table {
@@ -124,15 +125,21 @@ table {
     display: flex;           /* включаем флекс-контейнер */
     flex-direction: column;  /* ставим элементы вертикально */
     align-items: center;     /* выравниваем по центру */
+    position: absolute;
+    top: 0;
+    right: 75px;
 }
 
 .icons-column svg {
     display: block;
+
 }
 
 .weather-row {
     display: flex;           /* всё в одной строке */
     justify-content: center;
+    position: relative;
+
 }
 
 .weather_button input {
