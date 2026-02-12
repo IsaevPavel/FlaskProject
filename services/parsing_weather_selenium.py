@@ -1,55 +1,65 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+import os
+
 
 def parsing_weather(city_name=None):
     error_city = None
+
     options = Options()
+
+    if os.name == "nt":
+        options.binary_location = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+        service = Service(r"C:\PythonProject\chromedriver.exe")
+    else:
+        options.binary_location = "/usr/bin/chromium"
+        service = Service("/usr/bin/chromedriver")
+
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")  # иногда нужно
     options.add_argument("--window-size=1920,1080")
-    driver = webdriver.Chrome(options=options)
-    driver.get("https://www.gismeteo.by/weather-minsk-4248/")
+    # options.add_argument("--remote-debugging-port=9222")  # стабилизирует Chrome
+    options.page_load_strategy = "eager"
 
-    if city_name:
-        search_input = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, ".js-input"))
-        )
-        search_input.send_keys(city_name)
+    driver = webdriver.Chrome(service=service, options=options)
 
-        try:
-            dropdown_items = WebDriverWait(driver, 5).until(
-                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.group.found"))
+    try:
+        driver.get("https://www.gismeteo.by/weather-minsk-4248/")
+
+
+        if city_name:
+            search_input = WebDriverWait(driver, 3).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, ".js-input"))
             )
+            search_input.send_keys(city_name)
 
-            for item in dropdown_items:
-                name_span = item.find_element(By.CSS_SELECTOR, "span.name")
+            try:
+                dropdown_items = WebDriverWait(driver, 3).until(
+                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.group.found"))
+                )
+                for item in dropdown_items:
+                    name_span = item.find_element(By.CSS_SELECTOR, "span.name")
 
-                if city_name.lower() in name_span.text.lower():
-                    driver.execute_script("arguments[0].click();", name_span)
-                    break
+                    if city_name.lower() in name_span.text.lower():
+                        driver.execute_script("arguments[0].click();", name_span)
+                        break
 
-        except TimeoutException:
-            error_city = "Такого города нет!"
-            return None, None, None, None, None, None, error_city
-        # находим нужный город и кликаем
+            except TimeoutException:
+                error_city = "Такого города нет!"
+                return None, None, None, None, None, None, error_city
 
+        data = driver.execute_script("""
+                    return { city: window.M.state.city, weather: window.M.state.weather };
+                """)
 
-        # выполнить JS и получить объект
-    data = driver.execute_script("""
-    return {
-        city: window.M.state.city,
-        weather: window.M.state.weather
-    };
-    """)
-    driver.quit()
-
-    weather_info = {
+        weather_info = {
             "temperature": {
                 "description": "Температура воздуха",
                 "value": f"{data['weather']['cw']['temperatureAir'][0]}°C"
@@ -87,18 +97,23 @@ def parsing_weather(city_name=None):
                 "value": f"{data['weather']['cw']['precipitation'][0]}мм"
             }
         }
-    city = f"{data['city']['translations']['ru']['city']['name']}"
-    icon_code = data['weather']['cw']['iconWeather'][0]
-    icon = icon_code
-    icon2 = None
-    if icon_code.count("_") >= 2:
-        find_code = icon_code.rfind("_")
-        icon = icon_code[:find_code]
-        icon2 = icon_code[find_code + 1:]
-    b_n = data['weather']['cw']['colorBackground'][0].replace('-', '_')
-    background_image = f"https://st.gismeteo.st/assets/bg-desktop-now/{b_n}.webp"
-    temp = f"{data['weather']['cw']['temperatureAir'][0]}°C"
-    return weather_info, city, icon, icon2, background_image, temp, error_city
 
-# print(parsing_weather())
+        city = f"{data['city']['translations']['ru']['city']['name']}"
+        icon_code = data['weather']['cw']['iconWeather'][0]
 
+
+        icon = icon_code
+        icon2 = None
+        if icon_code.count("_") >= 2:
+            find_code = icon_code.rfind("_")
+            icon = icon_code[:find_code]
+            icon2 = icon_code[find_code + 1:]
+        b_n = data['weather']['cw']['colorBackground'][0].replace('-', '_')
+        background_image = f"https://st.gismeteo.st/assets/bg-desktop-now/{b_n}.webp"
+        temp = f"{data['weather']['cw']['temperatureAir'][0]}°C"
+        return weather_info, city, icon, icon2, background_image, temp, error_city
+    finally:
+        driver.quit()
+
+
+# print(parsing_weather("Несвиж"))
